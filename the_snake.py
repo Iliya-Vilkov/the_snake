@@ -133,7 +133,7 @@ class Snake(GameObject):
             self.reset()
         else:
             self.positions.insert(0, new_head)
-            if len(self.positions) > self.length:
+            if len(self.positions) > self.length+1:
                 self.positions.pop()
 
     def draw(self, surface: pygame.Surface):
