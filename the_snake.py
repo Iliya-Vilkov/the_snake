@@ -1,7 +1,8 @@
 """Snake ver 0.99 beta Developed by Enot(c)"""
-import pygame
 
 from random import randint
+
+import pygame
 
 from typing import Optional, Tuple
 
