@@ -1,8 +1,7 @@
 """Snake ver 0.99 beta Developed by Enot(c)"""
 
-from typing import Optional, Tuple
-
 from random import randint
+from typing import Optional, Tuple
 
 import pygame
 
@@ -133,7 +132,7 @@ class Snake(GameObject):
             self.reset()
         else:
             self.positions.insert(0, new_head)
-            if len(self.positions) > self.length+1:
+            if len(self.positions) > self.length + 1:
                 self.positions.pop()
 
     def draw(self, surface: pygame.Surface):
