@@ -1,9 +1,10 @@
 """Snake ver 0.99 beta Developed by Enot(c)"""
+import pygame
+
 from random import randint
 
 from typing import Optional, Tuple
 
-import pygame
 # Константы для размеров поля и сетки:
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
