@@ -58,8 +58,7 @@ class GameObject:
         self.body_color = body_color or (255, 255, 255)
 
     def draw(self, surface: pygame.Surface):
-        """Заготовка для отрисовки объектов"""
-        pass
+        """Заготовка для отрисовки объектов"""     
 
     def draw_cell(self, surface: pygame.Surface, position: Tuple[int, int],
                   color: Optional[Tuple[int, int, int]] = None) -> None:
@@ -123,10 +122,10 @@ class Snake(GameObject):
             self.direction = self.next_direction
             self.next_direction = None
 
-        head = self.positions[0]
+        head_x, head_y = self.get_head_position()
         xd, yd = self.direction
-        new_head = ((head[0] + (xd * GRID_SIZE)) % SCREEN_WIDTH,
-                    (head[1] + (yd * GRID_SIZE)) % SCREEN_HEIGHT)
+        new_head = ((head_x + (xd * GRID_SIZE)) % SCREEN_WIDTH,
+                    (head_y + (yd * GRID_SIZE)) % SCREEN_HEIGHT)
 
         if len(self.positions) > 2 and new_head in self.positions[2:]:
             self.reset()
@@ -140,7 +139,7 @@ class Snake(GameObject):
         for position in self.positions[:-1]:
             self.draw_cell(surface, position)
 
-        head_position = self.positions[0]
+        head_position = self.get_head_position()
         self.draw_cell(surface, head_position, SNAKE_COLOR)
 
     def get_head_position(self):
