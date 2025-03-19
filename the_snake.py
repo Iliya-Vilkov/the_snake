@@ -60,12 +60,12 @@ class GameObject:
     def draw(self, surface: pygame.Surface):
         """Заготовка для отрисовки объектов"""    
 
-    def draw_cell(self, position: Tuple[int, int],
+    def draw_cell(self, surface: pygame.Surface, position: Tuple[int, int],
                   color: Optional[Tuple[int, int, int]] = None) -> None:
         """Отрисовка объекта на экране"""
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
-        pygame.draw.rect(screen, color or self.body_color, rect)
-        pygame.draw.rect(screen, BORDER_COLOR, rect, 4)
+        pygame.draw.rect(surface, color or self.body_color, rect)
+        pygame.draw.rect(surface, BORDER_COLOR, rect, 4)
 
 
 class Apple(GameObject):
