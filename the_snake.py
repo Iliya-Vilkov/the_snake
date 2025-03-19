@@ -58,7 +58,7 @@ class GameObject:
         self.body_color = body_color or (255, 255, 255)
 
     def draw(self, surface: pygame.Surface):
-        """Заготовка для отрисовки объектов"""     
+        """Заготовка для отрисовки объектов"""    
 
     def draw_cell(self, surface: pygame.Surface, position: Tuple[int, int],
                   color: Optional[Tuple[int, int, int]] = None) -> None:
@@ -127,20 +127,20 @@ class Snake(GameObject):
         new_head = ((head_x + (xd * GRID_SIZE)) % SCREEN_WIDTH,
                     (head_y + (yd * GRID_SIZE)) % SCREEN_HEIGHT)
 
-        if len(self.positions) > 2 and new_head in self.positions[2:]:
+        if new_head in self.positions[2:]:
             self.reset()
         else:
             self.positions.insert(0, new_head)
             if len(self.positions) > self.length + 1:
                 self.positions.pop()
 
-    def draw(self, surface: pygame.Surface):
+    def draw(self):
         """Метод отрисовывает змейку на экране, затирая след"""
         for position in self.positions[:-1]:
-            self.draw_cell(surface, position)
+            self.draw_cell(screen, position)
 
         head_position = self.get_head_position()
-        self.draw_cell(surface, head_position, SNAKE_COLOR)
+        self.draw_cell(screen, head_position, SNAKE_COLOR)
 
     def get_head_position(self):
         """возвращает позицию головы змейки"""
@@ -191,7 +191,7 @@ def main():
             apple = Apple()
 
         screen.fill(BOARD_BACKGROUND_COLOR)
-        snake.draw(screen)
+        snake.draw()
         apple.draw(screen)
         pygame.display.update()
 
