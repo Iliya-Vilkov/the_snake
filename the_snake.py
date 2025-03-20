@@ -78,6 +78,8 @@ class Apple(GameObject):
         """Инициализирует базовые атрибуты объекта, такие как его позиция
         и цвет.
         """
+        self.position = None
+
         super().__init__(None, APPLE_COLOR)
         self.randomize_position()
 
