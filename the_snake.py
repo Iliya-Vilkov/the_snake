@@ -54,8 +54,8 @@ class GameObject:
     def __init__(self, position: Optional[Tuple[int, int]] = None,
                  body_color: Optional[Tuple[int, int, int]] = None) -> None:
         """Инициализирует базовые атрибуты класса - позицию и цвет."""
-        self.position = position or (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-        self.body_color = body_color or (255, 255, 255)
+        self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+        self.body_color = body_color
 
     def draw(self, surface: pygame.Surface):
         """Заготовка для отрисовки объектов"""    
