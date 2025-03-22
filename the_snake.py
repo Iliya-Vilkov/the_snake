@@ -19,6 +19,9 @@ RIGHT = (1, 0)
 # Цвет фона - черный:
 BOARD_BACKGROUND_COLOR = (0, 0, 0)
 
+# Цвет отрисовки drow
+DROW_COLOR = 4
+
 # Цвет границы ячейки
 BORDER_COLOR = (93, 216, 228)
 
@@ -101,7 +104,7 @@ class Apple(GameObject):
         """Метод отрисовки яблока"""
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
-        pygame.draw.rect(screen, BORDER_COLOR, rect, 4)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, DROW_COLOR)
 
 
 class Snake(GameObject):
@@ -147,10 +150,11 @@ class Snake(GameObject):
         for position in self.positions[:-1]:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
             pygame.draw.rect(screen, self.body_color, rect)
-            pygame.draw.rect(screen, BORDER_COLOR, rect, 4)
+            pygame.draw.rect(screen, BORDER_COLOR, rect, DROW_COLOR)
 
         # Отрисовка головы змейки.
-        head_rect = pygame.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
+        head_rect = pygame.Rect(self.get_head_position(),
+                                (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, head_rect)
         pygame.draw.rect(screen, BORDER_COLOR, head_rect, 1)
 
