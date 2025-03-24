@@ -82,22 +82,25 @@ class Apple(GameObject):
     игрового поля.
     """
 
-    def __init__(self):
+    def __init__(self, occupied_cell=[]):
         """Инициализирует базовые атрибуты объекта, такие как его позиция
         и цвет.
         """
         super().__init__()
         self.body_color = APPLE_COLOR
-        self.position = self.randomize_position()
+        self.randomize_position(occupied_cell)
 
-    def randomize_position(self):
+    def randomize_position(self, occupied_cell):
         """Устанавливает случайное положение яблока на игровом поле — задаёт
         атрибуту position новое значение.
         Координаты выбираются так, чтобы яблоко оказалось в пределах игрового
         поля.
         """
-        x_line = randint(0, GRID_WIDTH - 1) * GRID_SIZE
-        y_line = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        while True:
+            x_line = randint(0, GRID_WIDTH - 1) * GRID_SIZE
+            y_line = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+            if (x_line, y_line) not in occupied_cell:
+                break
         return x_line, y_line
 
     def draw(self):
@@ -135,15 +138,12 @@ class Snake(GameObject):
 
         head_x, head_y = self.get_head_position()
         xd, yd = self.direction
-        new_head = ((head_x + (xd * GRID_SIZE)) % SCREEN_WIDTH,
-                    (head_y + (yd * GRID_SIZE)) % SCREEN_HEIGHT)
+        self.positions.insert(0,
+                              ((head_x + GRID_SIZE * xd) % SCREEN_WIDTH,
+                               (head_y + GRID_SIZE * yd) % SCREEN_HEIGHT))
 
-        if new_head in self.positions[2:]:
-            self.reset()
-        else:
-            self.positions.insert(0, new_head)
-            if len(self.positions) > self.length + 1:
-                self.positions.pop()
+        if len(self.positions) > self.length + 1:
+            self.positions.pop()
 
     def draw(self):
         """Метод отрисовывает змейку на экране, затирая след"""
@@ -198,16 +198,22 @@ def main():
     # Инициализация PyGame:
     pygame.init()
     # Тут нужно создать экземпляры классов.
-    apple = Apple()
     snake = Snake()
+    apple = Apple(occupied_cell=snake.positions)
+
     while True:
         clock.tick(SPEED)
         handle_keys(snake)
         snake.move()
 
-        if snake.get_head_position() == apple.position:
+        if snake.get_head_position() in snake.positions[2:]:
+            snake.reset()
+            screen.fill(BOARD_BACKGROUND_COLOR)
+            apple.randomize_position(snake.positions)
+
+        elif snake.get_head_position() == apple.position:
             snake.positions.append(snake.last)
-            apple.position = apple.randomize_position()
+            apple.position = apple.randomize_position(snake.positions)
 
         screen.fill(BOARD_BACKGROUND_COLOR)
         snake.draw()
