@@ -82,12 +82,12 @@ class Apple(GameObject):
     игрового поля.
     """
 
-    def __init__(self, occupied_cell=[]):
+    def __init__(self, occupied_cell=(), body_color=APPLE_COLOR):
         """Инициализирует базовые атрибуты объекта, такие как его позиция
         и цвет.
         """
         super().__init__()
-        self.body_color = APPLE_COLOR
+        self.body_color = body_color
         self.randomize_position(occupied_cell)
 
     def randomize_position(self, occupied_cell):
